@@ -83,24 +83,23 @@ void feeder() {
   std::string publisher_host("localhost:9988");
   for(int i = 0; i < 10; i++) {
     if (i%2 == 0) {
-        std::string filter_name("");
-        std::cout << filter_name.size() << "\n";
-        zmq::message_t cmd(filter_name.size());
-        memcpy(cmd.data(), filter_name.data(), filter_name.size());
-        inproc_socket.send(cmd);
+      std::string filter_name("");
+      std::cout << filter_name.size() << "\n";
+      zmq::message_t cmd(filter_name.size());
+      memcpy(cmd.data(), filter_name.data(), filter_name.size());
+      inproc_socket.send(cmd);
     } else {
-        std::string filter_name("add");
-        std::cout << filter_name.size() << "\n";
-        zmq::message_t cmd(filter_name.size());
-        memcpy(cmd.data(), filter_name.data(), filter_name.size());
-        inproc_socket.send(cmd);
+      std::string filter_name("add");
+      std::cout << filter_name.size() << "\n";
+      zmq::message_t cmd(filter_name.size());
+      memcpy(cmd.data(), filter_name.data(), filter_name.size());
+      inproc_socket.send(cmd);
     }
     zmq::message_t resp;
     inproc_socket.recv(&resp);
 
     std::string response(static_cast<char*>(resp.data()), resp.size());
     std::cout << "Got response: " << response << "\n";
-
   }
 }
 
