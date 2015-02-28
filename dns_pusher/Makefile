@@ -1,5 +1,5 @@
 CC=c++
-LIBRARIES="-lresolv"
+LIBRARIES=-lresolv -lpthread
 FLAGS=-std=c++11
 
 all: dns_pusher
