@@ -9,6 +9,8 @@ not even checking them
 ## how?
 `dns_pusher <server_ip>  <server_port> <query_cname> <client_threads> <edns_client_subnet>
  <edns_client_subnet_bits>`
+
 example:
+
 `dns_pusher 8.8.8.8 53 www.foo.com 4 203.116.18.0 24`
 
