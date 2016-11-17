@@ -1,0 +1,8 @@
+alias dunwich='ssh n-chazin@10.0.0.23'
+alias findch='find . -name "*[ch]"'
+alias git-recent='git for-each-ref --sort=-committerdate --format="%(authordate) --  %(refname)" refs/heads/ | head -5'
+alias gw='ssh manager@gw.ops.cedexis.com'
+alias ls='ls -la'
+alias manager='ssh -p222 neil@manager.ops.cedexis.com'
+alias miskatonic='ssh n-chazin@dunwich.no-ip.biz'
+alias vi='vim'
