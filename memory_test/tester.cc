@@ -7,6 +7,8 @@
 #include <unordered_map>
 #include <map>
 #include <iostream>
+#include <boost/container/flat_map.hpp>
+
 
 struct Pod {
   uint32_t item1{0};
@@ -40,13 +42,18 @@ class PodMapContainer {
   T my_map_;
 };
 
+
+
 // conveniences
 using pod_map = std::map<uint8_t, Pod>;
 using pod_umap = std::unordered_map<uint8_t, Pod>;
+using pod_fmap = boost::container::flat_map<uint8_t,Pod>;
 using PMContainer = PodMapContainer<pod_map>;
 using PUMContainer = PodMapContainer<pod_umap>;
+using PFMContainer = PodMapContainer<pod_fmap>;
 using pod_map_container_vec = std::vector<PMContainer>;
 using pod_umap_container_vec = std::vector<PUMContainer>;
+using pod_fmap_container_vec = std::vector<PFMContainer>;
 using pod_vec_container_vec = std::vector<PodVectorContainer>;
 
 static int i;
@@ -54,7 +61,7 @@ static void sigact(int sig, siginfo_t *siginfo, void *context) {
   std::cout << "it is now: " << i << "\n";
 }
 
-enum class RunType { vector, map, unordered_map };
+enum class RunType { vector, map, unordered_map, flat_map };
 
 int main(int argc, char **argv) {
   struct sigaction act;
@@ -72,6 +79,7 @@ int main(int argc, char **argv) {
   pod_vec_container_vec pvvec;
   pod_map_container_vec pmvec;
   pod_umap_container_vec  pumvec;
+  pod_fmap_container_vec  pfmvec;
 
   std::cout << "sizeof(PodVectorContainer): " << sizeof(PodVectorContainer)
             << " size of 1,000,000: " << sizeof(PodVectorContainer) * 10000000
@@ -82,6 +90,9 @@ int main(int argc, char **argv) {
   std::cout << "sizeof(PUMContainer): " << sizeof(PUMContainer)
             << " size of 1,000,000: " << sizeof(PUMContainer) * 10000000
             << "\n";
+  std::cout << "sizeof(PFMContainer): " << sizeof(PFMContainer)
+            << " size of 1,000,000: " << sizeof(PFMContainer) * 10000000
+            << "\n";
   std::cout << "size of Pod: " << sizeof(Pod)
             << " size of 1,000,000 * 3: " << sizeof(Pod) * 10000000 * 3 << "\n";
 
@@ -91,7 +102,8 @@ int main(int argc, char **argv) {
       type = RunType::map;
     } else if (strcmp(argv[1], "unordered_map") == 0) {
       type = RunType::unordered_map;
-    }
+    } else if (strcmp(argv[1], "flat_map") == 0) {
+      type = RunType::flat_map;
   }
 
   if (type == RunType::vector) {
@@ -110,13 +122,22 @@ int main(int argc, char **argv) {
     }
   } else if (type == RunType::unordered_map) {
     std::cout << "unordered map mode!\n";
-    for (i = 0; i < 10000000; i++) {
+   for (i = 0; i < 10000000; i++) {
       if (i % 10000 == 0)
         std::cout << ".";
       pumvec.emplace_back(PUMContainer());
+  } 
+   }else if (type == RunType::flat_map) {
+    std::cout << "flat map mode!\n";
+   for (i = 0; i < 10000000; i++) {
+      if (i % 10000 == 0)
+        std::cout << ".";
+      pfmvec.emplace_back(PFMContainer());
     }
-
   }
+
   std::cout << "done!\n";
   sleep(120);
+}
+
 }
