@@ -1,0 +1,8 @@
+1. Create and activate virtualenv running Python 3.7.3.  Below is an example of how this can be done on a Mac with [Brew](https://brew.sh/), but any virtualenv should suffice.  It's not required to use `pyenv`.
+    - `brew install pyenv-virtualenv`
+    - `pyenv install -s 3.7.3`
+    - `eval "$(pyenv init -)" # add this to ~/.profile`
+    - `pyenv virtualenv -p python3.7 3.7.3 proj-3.7.3`
+    - `pyenv activate proj-3.7.3`
+2. `pip install -r requirements.txt`
+
